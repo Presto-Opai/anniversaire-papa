@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Joyeux anniversaire Papa</title>
+<meta name="description" content="Un petit paquet à ouvrir.">
+<meta property="og:title" content="Joyeux anniversaire Papa 🎁">
+<meta property="og:description" content="Un petit paquet à ouvrir.">
+<meta property="og:image" content="poster.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎁</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#EFE4CF; --paper:#F7F0E1; --ink:#2B2421; --ink-soft:#5b4f48;
+  --red:#C2312A; --red-dark:#8f1f1a; --ochre:#DDA23A; --mauve:#7E5A9B; --blue:#5d7186; --green:#6b8a4a;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--ink); background:var(--cream);
+  font-family:"Fraunces",Georgia,serif; font-size:18px; line-height:1.55;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(rgba(43,36,33,.05) 1px, transparent 1px),
+    radial-gradient(rgba(43,36,33,.035) 1px, transparent 1px);
+  background-size:7px 7px, 13px 13px; background-position:0 0, 3px 5px;
+}
+body.locked{overflow:hidden}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+
+/* ---------- red thread ---------- */
+.thread{position:absolute;left:0;width:100%;height:80px;pointer-events:none;overflow:visible}
+.thread path{fill:none;stroke:var(--red);stroke-width:2.2;stroke-linecap:round}
+
+/* ---------- intro / gift ---------- */
+#intro{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 16px;position:relative;text-align:center}
+.kicker{font-family:"Special Elite",monospace;letter-spacing:.12em;text-transform:uppercase;font-size:14px;color:var(--ink-soft);margin:0 0 6px}
+h1{font-weight:900;font-size:clamp(40px,8vw,84px);line-height:.95;margin:0;letter-spacing:-.02em}
+h1 em{font-style:italic;font-weight:400;color:var(--red)}
+.hand{font-family:"Caveat",cursive;font-weight:700}
+.age{font-size:clamp(26px,4.5vw,40px);color:var(--red);margin:6px 0 18px;transform:rotate(-2deg)}
+
+#gift{position:relative;width:min(380px,84vw,calc((100svh - 230px) * .703));aspect-ratio:1433/2038;margin-top:22px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+#gift svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#gift .shadow{position:absolute;left:6%;right:6%;bottom:-18px;height:26px;background:radial-gradient(closest-side,rgba(43,36,33,.28),transparent);filter:blur(2px)}
+#gift.wiggle{animation:wiggle .9s ease-in-out infinite;animation-delay:1.2s}
+@keyframes wiggle{0%,70%,100%{transform:rotate(0)}76%{transform:rotate(-2.5deg)}84%{transform:rotate(2.5deg)}92%{transform:rotate(-1deg)}}
+#gift.hit{animation:hit .18s ease-out}
+@keyframes hit{50%{transform:scale(.975) rotate(-.6deg)}}
+.inside{position:absolute;inset:0;overflow:hidden;background:#fffaf0;border:2px solid var(--ink);border-radius:3px}
+.inside img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.inside .scroll-cta{position:absolute;left:0;right:0;bottom:0;padding:60px 14px 16px;text-align:center;color:#fff;
+  background:linear-gradient(transparent,rgba(30,24,40,.82));font-family:"Caveat",cursive;font-weight:700;font-size:clamp(22px,4.6vw,30px);line-height:1.1;
+  text-shadow:0 1px 3px rgba(0,0,0,.5);text-decoration:none;opacity:0;transition:opacity .6s .6s}
+body.opened .inside .scroll-cta{opacity:1}
+.inside .scroll-cta .arrow{display:block;font-size:.9em;animation:bob 1.4s ease-in-out infinite}
+.hint{margin-top:34px;font-size:28px;color:var(--ink-soft);transition:opacity .4s}
+.hint .arrow{display:inline-block;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.progress{display:flex;gap:6px;justify-content:center;margin-top:8px;height:10px}
+.progress i{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink);transition:background .2s}
+.progress i.on{background:var(--red);border-color:var(--red)}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+
+/* ---------- revealed content ---------- */
+#content{display:none;position:relative}
+body.opened #content{display:block}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+section{position:relative;padding:72px 0}
+.chapter{font-family:"Caveat",cursive;font-size:30px;color:var(--red);margin:0 0 4px;transform:rotate(-1.5deg);display:inline-block}
+h2{font-size:clamp(32px,5.5vw,54px);line-height:1;margin:0 0 18px;font-weight:900;letter-spacing:-.015em}
+h2 em{font-weight:400;color:var(--red)}
+p.lead{font-size:clamp(18px,2.4vw,21px);max-width:620px}
+.strip{display:inline-block;background:#fffaf0;font-family:"Special Elite",monospace;padding:6px 14px;font-size:15px;
+  clip-path:polygon(0 8%,3% 0,20% 6%,38% 0,55% 5%,72% 0,90% 6%,100% 0,99% 92%,82% 100%,64% 94%,45% 100%,27% 95%,10% 100%,0 93%);
+  box-shadow:0 1px 0 rgba(0,0,0,.05)}
+
+/* tickets */
+.tickets{position:relative;margin:34px auto 10px;max-width:640px;height:330px}
+.ticket{position:absolute;left:50%;top:0;width:min(560px,92vw);display:flex;background:var(--paper);border:2px solid var(--ink);
+  box-shadow:6px 8px 0 rgba(43,36,33,.15);transform-origin:50% 120%;transition:transform .9s cubic-bezier(.2,.9,.3,1.2)}
+.ticket.t1{transform:translateX(-50%) rotate(-5deg) translateY(10px)}
+.ticket.t2{transform:translateX(-50%) rotate(3deg) translateY(40px)}
+.tickets:hover .t1{transform:translateX(-56%) rotate(-8deg) translateY(4px)}
+.tickets:hover .t2{transform:translateX(-44%) rotate(6deg) translateY(44px)}
+.ticket .main{flex:1;padding:20px 22px 18px;border-right:2px dashed var(--ink);position:relative}
+.ticket .main::before,.ticket .main::after{content:"";position:absolute;right:-13px;width:24px;height:24px;border-radius:50%;background:var(--cream);border:2px solid var(--ink)}
+.ticket .main::before{top:-14px}.ticket .main::after{bottom:-14px}
+.ticket .stub{width:118px;padding:18px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-family:"Special Elite",monospace;font-size:13px;line-height:1.3}
+.ticket .stub b{font-family:"Fraunces";font-size:38px;color:var(--red);line-height:1}
+.ticket .show{font-size:clamp(28px,5vw,42px);font-weight:900;line-height:1;margin:2px 0 6px}
+.ticket .cie{font-family:"Special Elite",monospace;font-size:15px}
+.ticket .meta{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:14px;font-family:"Special Elite",monospace;font-size:14px}
+.ticket .meta span{white-space:nowrap}
+.ticket .stamp{position:absolute;right:16px;top:14px;font-family:"Caveat";font-size:21px;color:var(--red);border:2px solid var(--red);border-radius:6px;padding:0 8px;transform:rotate(8deg);opacity:.85}
+.pro{font-size:clamp(28px,4.4vw,38px);color:var(--red);transform:rotate(-2deg);margin:0 0 6px}
+.note{background:#fffaf0;border-left:4px solid var(--ochre);padding:16px 20px;max-width:640px;margin:22px 0;box-shadow:2px 3px 0 rgba(43,36,33,.08)}
+.note .hand{font-size:24px;font-weight:500;line-height:1.25}
+
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;font-family:"Special Elite",monospace;font-size:15px;letter-spacing:.03em;
+  color:var(--paper);background:var(--ink);text-decoration:none;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--red);transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--red)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--red)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:4px 4px 0 rgba(43,36,33,.18)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* clip */
+.frame{position:relative;margin-top:26px;background:#fffaf0;padding:14px 14px 46px;box-shadow:0 2px 0 rgba(0,0,0,.04),8px 10px 0 rgba(43,36,33,.13);transform:rotate(-.6deg)}
+.frame video{display:block;width:100%;aspect-ratio:16/9;background:#1d1917}
+.frame .caption{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:"Caveat";font-size:24px}
+.corner{position:absolute;width:34px;height:34px;background:var(--ink);opacity:.85}
+.corner.tl{left:-6px;top:-6px;clip-path:polygon(0 0,100% 0,0 100%)}
+.corner.tr{right:-6px;top:-6px;clip-path:polygon(0 0,100% 0,100% 100%)}
+.corner.bl{left:-6px;bottom:-6px;clip-path:polygon(0 0,0 100%,100% 100%)}
+.corner.br{right:-6px;bottom:-6px;clip-path:polygon(100% 0,0 100%,100% 100%)}
+
+footer{text-align:center;padding:60px 16px 90px}
+footer .hand{font-size:clamp(34px,6vw,52px);line-height:1.1}
+footer .replay{font-family:"Special Elite",monospace;font-size:13px;color:var(--ink-soft);background:none;border:none;text-decoration:underline;cursor:pointer;margin-top:26px}
+
+@media (max-width:560px){
+  body{font-size:17px}
+  .tickets{height:300px}
+  .ticket{width:84vw}
+  .ticket .stub{width:84px;font-size:11px}.ticket .stub b{font-size:28px}
+  .ticket .main{padding:16px 14px}
+  .ticket .stamp{display:none}
+  .btn{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body class="locked">
+
+<canvas id="confetti"></canvas>
+
+<!-- ============ INTRO / GIFT ============ -->
+<header id="intro">
+  <p class="kicker">3 novembre 2026</p>
+  <h1>Joyeux anniversaire <em>Papa</em></h1>
+
+  <div id="gift" class="wiggle" role="button" aria-label="Déchirer l'emballage du cadeau" tabindex="0">
+    <div class="shadow"></div>
+    <div class="inside">
+      <img src="gerard.jpg" alt="Gérard, jeune, moustache et pull gris">
+      <a class="scroll-cta" href="#cadeau">Défile vers le bas pour trouver ton cadeau !<span class="arrow">↓</span></a>
+    </div>
+    <svg id="paper" viewBox="0 0 400 569" aria-hidden="true">
+      <defs>
+        <pattern id="pat" width="44" height="44" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+          <rect width="44" height="44" fill="#C2312A"/>
+          <circle cx="11" cy="11" r="3.2" fill="#EFE4CF" opacity=".9"/>
+          <circle cx="33" cy="33" r="3.2" fill="#EFE4CF" opacity=".9"/>
+          <path d="M33 6 l2 5 5 .3 -4 3.2 1.4 5 -4.4-2.8 -4.4 2.8 1.4-5 -4-3.2 5-.3z" fill="#DDA23A"/>
+          <path d="M8 30 l1.4 3.4 3.5.2 -2.8 2.2 1 3.4 -3.1-2 -3.1 2 1-3.4 -2.8-2.2 3.5-.2z" fill="#DDA23A" opacity=".85"/>
+        </pattern>
+        <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".16"/>
+          <stop offset=".5" stop-color="#fff" stop-opacity="0"/>
+          <stop offset="1" stop-color="#000" stop-opacity=".14"/>
+        </linearGradient>
+      </defs>
+      <g id="shards"></g>
+      <g id="ribbon">
+        <g class="rv">
+          <rect x="182" y="0" width="36" height="569" fill="#DDA23A"/>
+          <rect x="188" y="0" width="3" height="569" fill="#fff" opacity=".35"/>
+        </g>
+        <g class="rh">
+          <rect x="0" y="266" width="400" height="36" fill="#DDA23A"/>
+          <rect x="0" y="272" width="400" height="3" fill="#fff" opacity=".35"/>
+        </g>
+        <g class="bow"><g transform="translate(0 122)">
+          <path d="M200 160 C150 105 118 128 132 152 C142 170 176 168 200 160Z" fill="#E8B04B" stroke="#a8761f" stroke-width="2"/>
+          <path d="M200 160 C250 105 282 128 268 152 C258 170 224 168 200 160Z" fill="#E8B04B" stroke="#a8761f" stroke-width="2"/>
+          <path d="M196 166 L170 214 L184 208 L190 222 L204 168Z" fill="#DDA23A" stroke="#a8761f" stroke-width="2"/>
+          <path d="M204 166 L232 212 L218 207 L212 221 L196 168Z" fill="#DDA23A" stroke="#a8761f" stroke-width="2"/>
+          <ellipse cx="200" cy="163" rx="15" ry="12" fill="#DDA23A" stroke="#a8761f" stroke-width="2"/>
+          <g transform="translate(232 196) rotate(10)">
+            <rect x="-6" y="0" width="112" height="44" rx="3" fill="#F7F0E1" stroke="#2B2421" stroke-width="1.6"/>
+            <circle cx="6" cy="22" r="3" fill="none" stroke="#2B2421" stroke-width="1.4"/>
+            <text x="58" y="29" text-anchor="middle" font-family="Caveat, cursive" font-size="22" font-weight="700" fill="#2B2421">Pour Gérard</text>
+          </g>
+        </g></g>
+      </g>
+      <rect id="sheenRect" width="400" height="569" fill="url(#sheen)" pointer-events="none"/>
+      <g id="flying"></g>
+    </svg>
+  </div>
+  <div class="hint hand" id="hint"><span class="arrow">☝</span> Clique pour déchirer le papier !
+    <div class="progress" id="progress" aria-hidden="true"></div>
+  </div>
+</header>
+
+<!-- ============ CONTENT ============ -->
+<main id="content">
+  <svg class="thread" viewBox="0 0 1000 80" preserveAspectRatio="none" style="top:-30px"><path d="M-10 40 C 150 5, 260 75, 420 40 S 720 5, 860 46 S 980 60, 1010 30"/></svg>
+
+  <section id="cadeau">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="chapter">Ton cadeau</span>
+        <h2>Deux places pour <em>« Vite, un selfie ! »</em></h2>
+        <p class="pro hand">… pour le pro des selfies 📸</p>
+      </div>
+
+      <div class="tickets reveal" aria-label="Les deux billets">
+        <div class="ticket t1">
+          <div class="main">
+            <div class="cie">Cie Lucamoros présente</div>
+            <div class="show">Vite, un selfie !</div>
+            <div class="meta">
+              <span>📅 jeu. 26 nov. 2026</span><span>🕝 14 h 30</span><span>📍 L'Onde, Vélizy</span><span>🪑 Placement libre</span>
+            </div>
+          </div>
+          <div class="stub">billet<b>2/2</b>Atelier</div>
+        </div>
+        <div class="ticket t2">
+          <div class="main">
+            <div class="cie">Cie Lucamoros présente</div>
+            <div class="show">Vite, un selfie !</div>
+            <div class="meta">
+              <span>📅 jeu. 26 nov. 2026</span><span>🕝 14 h 30</span><span>📍 L'Onde, Vélizy</span><span>🪑 Placement libre</span>
+            </div>
+          </div>
+          <div class="stub">billet<b>1/2</b>Atelier</div>
+        </div>
+      </div>
+
+      <div class="note reveal">
+        <p class="hand" style="margin:0">C'est un spectacle artistique à l'Onde, entre théâtre, peinture et photographie. J'avais vu leur spectacle précédent, <u>La Tortue de Gauguin</u>, à Granville, et ils m'ont époustouflé. J'ai pensé à toi en voyant qu'ils passaient à Vélizy.</p>
+      </div>
+
+      <div class="reveal">
+        <p style="margin:0"><span class="strip">Jeudi 26 novembre 2026 · 14 h 30 · L'Onde, Vélizy-Villacoublay · salle Atelier</span></p>
+        <div class="btns">
+          <a class="btn" href="billets-vite-un-selfie.pdf" download="Billets - Vite, un selfie ! - 26 novembre 2026.pdf">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+            Télécharger les billets (PDF)</a>
+          <a class="btn ghost" id="ics" href="#" download="vite-un-selfie.ics">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+            Ajouter à l'agenda</a>
+          <a class="btn ghost" href="https://www.londe.fr/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+            Le théâtre</a>
+        </div>
+        <p style="font-size:14px;color:var(--ink-soft);margin-top:14px">Les billets sont à imprimer en A4 ou à montrer sur le téléphone à l'entrée.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="clip">
+    <svg class="thread" viewBox="0 0 1000 80" preserveAspectRatio="none" style="top:-10px"><path d="M-10 50 C 200 75, 300 10, 520 38 S 820 70, 1010 20"/></svg>
+    <div class="wrap">
+      <div class="reveal">
+        <span class="chapter">Ah, et aussi…</span>
+        <h2>Gérard, <em>ou le chemin du Salève</em></h2>
+        <p class="lead">Une animation avec chanson, sur la première partie de ta biographie en cours…</p>
+      </div>
+      <div class="frame reveal">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <video controls preload="metadata" poster="poster.jpg" playsinline>
+          <source src="clip-gerard-lepere.mp4" type="video/mp4">
+        </video>
+        <div class="caption">Gérard Lepère · 3 novembre 1951</div>
+      </div>
+      <div class="btns reveal" style="margin-top:34px">
+        <a class="btn" href="clip-gerard-lepere.mp4" download="Gérard, ou le chemin du Salève - clip.mp4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+          Télécharger le clip</a>
+        <a class="btn ghost" id="hd" href="#" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+          Qualité maximale (≈ 300 Mo)</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="reveal">
+    <div class="hand">Joyeux anniversaire Papa&nbsp;!<br>Je t'aime ❤</div>
+    <div class="hand" style="font-size:30px;color:var(--red);margin-top:10px">Arthur</div>
+    <button class="replay" id="replay">↺ remballer le cadeau</button>
+  </footer>
+</main>
+
+<script>
+(() => {
+  const HD_URL = ""; // filled in after the GitHub release is created
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 400, H = 569, COLS = 7, ROWS = 10;
+  const gift = document.getElementById("gift");
+  const svg = document.getElementById("paper");
+  const shardsG = document.getElementById("shards");
+  const flyingG = document.getElementById("flying");
+  const ribbon = document.getElementById("ribbon");
+  const hint = document.getElementById("hint");
+  const progress = document.getElementById("progress");
+  let shards = [], ribbonOn = true, clicks = 0, opened = false;
+
+  if (HD_URL) { const hd = document.getElementById("hd"); hd.href = HD_URL; hd.hidden = false; }
+
+  // --- calendar file
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//papa//cadeau//FR","BEGIN:VEVENT",
+    "UID:vite-un-selfie-20261126@cadeau-papa","DTSTAMP:20261101T000000Z",
+    "DTSTART;TZID=Europe/Paris:20261126T143000","SUMMARY:Vite\\, un selfie ! (Cie Lucamoros)",
+    "LOCATION:L'Onde\\, Vélizy-Villacoublay","DESCRIPTION:Cadeau d'anniversaire d'Arthur 🎁 – salle Atelier\\, placement libre",
+    "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:Demain : Vite\\, un selfie !","END:VALARM",
+    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+  document.getElementById("ics").href = URL.createObjectURL(new Blob([ics], {type:"text/calendar"}));
+
+  // --- build torn-paper shards from a jittered grid
+  function build() {
+    shardsG.innerHTML = ""; flyingG.innerHTML = ""; shards = [];
+    const pts = [];
+    for (let r = 0; r <= ROWS; r++) {
+      pts[r] = [];
+      for (let c = 0; c <= COLS; c++) {
+        const edgeX = c === 0 || c === COLS, edgeY = r === 0 || r === ROWS;
+        const jx = edgeX ? 0 : (Math.random() - .5) * (W / COLS) * .7;
+        const jy = edgeY ? 0 : (Math.random() - .5) * (H / ROWS) * .7;
+        pts[r][c] = [c * W / COLS + jx, r * H / ROWS + jy];
+      }
+    }
+    // jagged edge between two points
+    const jag = (a, b) => {
+      const out = [a], n = 4;
+      for (let i = 1; i < n; i++) {
+        const t = i / n, dx = b[0] - a[0], dy = b[1] - a[1], len = Math.hypot(dx, dy) || 1;
+        const k = (Math.random() - .5) * 7;
+        out.push([a[0] + dx * t - dy / len * k, a[1] + dy * t + dx / len * k]);
+      }
+      return out;
+    };
+    const edgeCache = new Map();
+    const edge = (p, q) => {
+      const key = p + "|" + q, rkey = q + "|" + p;
+      if (edgeCache.has(rkey)) return edgeCache.get(rkey).slice().reverse();
+      const e = [...jag(p, q), q]; edgeCache.set(key, e); return e;
+    };
+    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
+      const A = pts[r][c], B = pts[r][c + 1], C = pts[r + 1][c + 1], D = pts[r + 1][c];
+      const flip = (r + c) % 2;
+      const tris = flip ? [[A, B, C], [A, C, D]] : [[A, B, D], [B, C, D]];
+      for (const t of tris) {
+        const poly = [];
+        for (let i = 0; i < 3; i++) {
+          const p = t[i], q = t[(i + 1) % 3];
+          const onBorder = (p[0] === q[0] && (p[0] === 0 || p[0] === W)) || (p[1] === q[1] && (p[1] === 0 || p[1] === H));
+          const seg = onBorder ? [p, q] : edge(p, q);
+          poly.push(...seg.slice(0, -1));
+        }
+        const el = document.createElementNS(NS, "polygon");
+        el.setAttribute("points", poly.map(p => p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" "));
+        el.setAttribute("fill", "url(#pat)");
+        el.setAttribute("stroke", "#C2312A"); el.setAttribute("stroke-width", "1.2");
+        shardsG.appendChild(el);
+        const cx = (t[0][0] + t[1][0] + t[2][0]) / 3, cy = (t[0][1] + t[1][1] + t[2][1]) / 3;
+        shards.push({el, cx, cy, gone: false});
+      }
+    }
+    ribbon.style.display = ""; ribbonOn = true;
+    for (const g of ribbon.children) g.style.transform = "";
+    document.getElementById("sheenRect").style.opacity = 1;
+    progress.innerHTML = "<i></i>".repeat(6);
+  }
+
+  // --- paper rip sound (filtered noise)
+  let ac;
+  function rip(strength = 1) {
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      const dur = .22 + Math.random() * .15, n = Math.floor(ac.sampleRate * dur);
+      const buf = ac.createBuffer(1, n, ac.sampleRate), d = buf.getChannelData(0);
+      for (let i = 0; i < n; i++) {
+        const env = Math.pow(1 - i / n, 1.6) * (Math.random() < .9 ? 1 : 2.4);
+        d[i] = (Math.random() * 2 - 1) * env * (.55 + .45 * Math.sin(i / (30 + Math.random() * 40)));
+      }
+      const src = ac.createBufferSource(); src.buffer = buf;
+      const bp = ac.createBiquadFilter(); bp.type = "bandpass"; bp.frequency.value = 1800 + Math.random() * 1600; bp.Q.value = .7;
+      const g = ac.createGain(); g.gain.value = .45 * strength;
+      src.connect(bp).connect(g).connect(ac.destination); src.start();
+    } catch (e) {}
+  }
+
+  // --- fling a shard off with physics
+  const flying = [];
+  function fling(s, ox, oy, power = 1) {
+    s.gone = true;
+    s.el.setAttribute("stroke", "#F7F0E1"); s.el.setAttribute("stroke-width", "2.2");
+    flyingG.appendChild(s.el);
+    const ang = Math.atan2(s.cy - oy, s.cx - ox) + (Math.random() - .5) * .8;
+    const sp = (6 + Math.random() * 7) * power;
+    flying.push({s, x: 0, y: 0, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - 7 * power,
+      r: 0, vr: (Math.random() - .5) * 26, life: 0, born: performance.now()});
+    if (flying.length === 1) requestAnimationFrame(step);
+  }
+  function step() {
+    for (let i = flying.length - 1; i >= 0; i--) {
+      const f = flying[i];
+      f.vy += .7; f.vx *= .985; f.x += f.vx; f.y += f.vy; f.r += f.vr; f.life = (performance.now() - f.born) / 16.7;
+      f.s.el.setAttribute("transform", `translate(${f.x.toFixed(1)} ${f.y.toFixed(1)}) rotate(${f.r.toFixed(1)} ${f.s.cx.toFixed(1)} ${f.s.cy.toFixed(1)})`);
+      f.s.el.style.opacity = Math.max(0, 1 - f.life / 70);
+      if (f.life > 70) { f.s.el.remove(); flying.splice(i, 1); }
+    }
+    if (flying.length) requestAnimationFrame(step);
+  }
+
+  function dropRibbon() {
+    ribbonOn = false;
+    const [rv, rh, bow] = ribbon.children;
+    for (const [g, x, y, rot] of [[rv, -30, 500, -25], [rh, 40, 520, 15], [bow, 120, -260, 220]]) {
+      g.style.transition = "transform 1s cubic-bezier(.5,-.3,.7,1), opacity 1s";
+      g.style.transformOrigin = "200px 285px";
+      g.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg)`;
+    }
+    setTimeout(() => { if (!ribbonOn) ribbon.style.display = "none"; }, 1000);
+  }
+
+  function tear(e) {
+    if (opened) return;
+    gift.classList.remove("wiggle", "hit"); void gift.offsetWidth; gift.classList.add("hit");
+    const rect = svg.getBoundingClientRect();
+    let x = W / 2, y = H / 2;
+    if (e && e.clientX != null && e.detail !== 0) {
+      x = (e.clientX - rect.left) / rect.width * W; y = (e.clientY - rect.top) / rect.height * H;
+    } else { x = 60 + Math.random() * (W - 120); y = 50 + Math.random() * (H - 100); }
+    clicks++;
+    rip(1);
+    [...progress.children].forEach((d, i) => d.classList.toggle("on", i < clicks));
+    if (ribbonOn) { dropRibbon(); }
+    const left = shards.filter(s => !s.gone);
+    const radius = 48 + clicks * 12;
+    left.filter(s => Math.hypot(s.cx - x, s.cy - y) < radius * (0.75 + Math.random() * .5))
+        .forEach((s, i) => setTimeout(() => fling(s, x, y), i * 12));
+    const remaining = shards.filter(s => !s.gone).length;
+    if (clicks >= 6 || remaining < shards.length * .2) open(x, y);
+  }
+
+  function open(x, y) {
+    opened = true;
+    hint.style.opacity = 0;
+    document.getElementById("sheenRect").style.opacity = 0;
+    setTimeout(() => rip(1.3), 120);
+    shards.filter(s => !s.gone).forEach((s, i) => setTimeout(() => fling(s, x, y, 1.2), 100 + i * 15));
+    setTimeout(() => { confetti(); reveal(); }, 500);
+  }
+
+  function reveal() {
+    document.body.classList.remove("locked");
+    document.body.classList.add("opened");
+    const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), {threshold: .15});
+    document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  }
+
+  gift.addEventListener("click", tear);
+  gift.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); tear(); } });
+  document.getElementById("replay").addEventListener("click", () => {
+    opened = false; clicks = 0; build();
+    document.body.classList.add("locked"); document.body.classList.remove("opened");
+    document.querySelectorAll(".reveal").forEach(el => el.classList.remove("in"));
+    hint.style.opacity = 1; gift.classList.add("wiggle");
+    window.scrollTo({top: 0});
+  });
+
+  // --- confetti
+  const cv = document.getElementById("confetti"), cx = cv.getContext("2d");
+  function confetti() {
+    if (reduce) return;
+    const dpr = devicePixelRatio || 1;
+    cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const cols = ["#C2312A", "#DDA23A", "#7E5A9B", "#5d7186", "#6b8a4a", "#EFE4CF", "#2B2421"];
+    const r = gift.getBoundingClientRect(), ox = r.left + r.width / 2, oy = r.top + r.height / 2;
+    const ps = Array.from({length: 180}, () => {
+      const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 11;
+      return {x: ox, y: oy, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 8, w: 6 + Math.random() * 8, h: 4 + Math.random() * 6,
+        rot: Math.random() * 6, vr: (Math.random() - .5) * .4, c: cols[Math.floor(Math.random() * cols.length)], life: 0};
+    });
+    const t0 = performance.now();
+    (function tick() {
+      cx.clearRect(0, 0, innerWidth, innerHeight);
+      let alive = 0;
+      for (const p of ps) {
+        p.vy += .25; p.vx *= .99; p.vy *= .99; p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.life = (performance.now() - t0) / 16.7;
+        if (p.y < innerHeight + 30 && p.life < 260) alive++;
+        cx.save(); cx.translate(p.x, p.y); cx.rotate(p.rot); cx.scale(1, Math.cos(p.life * .15));
+        cx.fillStyle = p.c; cx.globalAlpha = Math.max(0, 1 - p.life / 260); cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h); cx.restore();
+      }
+      if (alive) requestAnimationFrame(tick); else cx.clearRect(0, 0, innerWidth, innerHeight);
+    })();
+  }
+
+  build();
+})();
+</script>
+</body>
+</html>
